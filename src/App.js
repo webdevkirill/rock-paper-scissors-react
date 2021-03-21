@@ -4,7 +4,17 @@ import Rock from './icons/Rock';
 import Paper from './icons/Paper';
 import Scissors from './icons/Scissors';
 
+const choices = [
+	{ id: 1, name: 'rock', component: Rock },
+	{ id: 2, name: 'paper', component: Paper },
+	{ id: 3, name: 'scissors', component: Scissors },
+];
+
 export default function App() {
+	const userChoiseHandler = (choice) => {
+		console.log(choice);
+	};
+
 	return (
 		<div className='app'>
 			<div className='info'>
@@ -28,15 +38,15 @@ export default function App() {
 				<div>Компьютер</div>
 
 				<div>
-					<button className='rock'>
-						<Rock />
-					</button>
-					<button className='paper'>
-						<Paper />
-					</button>
-					<button className='scissors'>
-						<Scissors />
-					</button>
+					{choices.map((choice) => (
+						<button
+							key={choice.id}
+							className={choice.name}
+							onClick={() => userChoiseHandler(choice)}
+						>
+							<choice.component />
+						</button>
+					))}
 				</div>
 
 				<div className='vs'>Против</div>
