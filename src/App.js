@@ -4,18 +4,15 @@ import { Rock } from './icons/Rock';
 import { Paper } from './icons/Paper';
 import { Scissors } from './icons/Scissors';
 import { useGame } from './hooks/useGame';
+import Overlay from './components/Overlay';
+import WinsAndLosses from './components/WinsAndLosses';
+import Choice from './components/Choice';
 
 const choices = [
 	{ id: 1, name: 'rock', component: Rock, lossesTo: 2 },
 	{ id: 2, name: 'paper', component: Paper, lossesTo: 3 },
 	{ id: 3, name: 'scissors', component: Scissors, lossesTo: 1 },
 ];
-
-const resultMessages = {
-	win: 'Победа!',
-	lose: 'Вы проиграли',
-	draw: 'Ничья',
-};
 
 export default function App() {
 	const {
@@ -28,64 +25,16 @@ export default function App() {
 		restartGame,
 	} = useGame(choices);
 
-	const renderComponent = (choice) => {
-		const Component = choice.component;
-		return <Component />;
-	};
-
 	return (
 		<div className='app'>
-			<div className='info'>
-				<h2>Камень-ножницы-бумага</h2>
-				<div className='wins-losses'>
-					<div className='wins'>
-						<span className='number'>{wins}</span>
-						<span className='text'>Побед</span>
-					</div>
-
-					<div className='losses'>
-						<span className='number'>{losses}</span>
-						<span className='text'>Поражений</span>
-					</div>
-				</div>
-			</div>
-
-			{gameState && (
-				<div className={`game-state ${gameState}`}>
-					<div>
-						<div className='game-state-content'>
-							<p>{renderComponent(userChose)}</p>
-							<p>{resultMessages[gameState]}</p>
-							<p>{renderComponent(computerChose)}</p>
-						</div>
-						<button onClick={restartGame}>Играть заного</button>
-					</div>
-				</div>
-			)}
-
-			<div className='choices'>
-				<div>Вы</div>
-				<div />
-				<div>Компьютер</div>
-
-				<div>
-					{choices.map((choice) => (
-						<button
-							key={choice.id}
-							className={choice.name}
-							onClick={() => userChoiseHandler(choice)}
-						>
-							{renderComponent(choice)}
-						</button>
-					))}
-				</div>
-
-				<div className='vs'>Против</div>
-
-				<div>
-					<button className='computer-choice'>?</button>
-				</div>
-			</div>
+			<WinsAndLosses wins={wins} losses={losses} />
+			<Overlay
+				gameState={gameState}
+				userChose={userChose}
+				computerChose={computerChose}
+				restartGame={restartGame}
+			/>
+			<Choice choices={choices} userChoiseHandler={userChoiseHandler} />
 		</div>
 	);
 }
