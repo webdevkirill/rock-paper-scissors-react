@@ -1,5 +1,8 @@
 import React from 'react';
 import './App.css';
+import Rock from './icons/Rock';
+import Paper from './icons/Paper';
+import Scissors from './icons/Scissors';
 
 export default function App() {
 	return (
@@ -25,9 +28,15 @@ export default function App() {
 				<div>Компьютер</div>
 
 				<div>
-					<button className='rock'>Комень</button>
-					<button className='paper'>Бумага</button>
-					<button className='scissors'>Ножницы</button>
+					<button className='rock'>
+						<Rock />
+					</button>
+					<button className='paper'>
+						<Paper />
+					</button>
+					<button className='scissors'>
+						<Scissors />
+					</button>
 				</div>
 
 				<div className='vs'>Против</div>
