@@ -3,30 +3,29 @@ import './App.css';
 import { Rock } from './icons/Rock';
 import { Paper } from './icons/Paper';
 import { Scissors } from './icons/Scissors';
+import { useGame } from './hooks/useGame';
 
 const choices = [
-	{ id: 1, name: 'rock', component: Rock },
-	{ id: 2, name: 'paper', component: Paper },
-	{ id: 3, name: 'scissors', component: Scissors },
+	{ id: 1, name: 'rock', component: Rock, lossesTo: 2 },
+	{ id: 2, name: 'paper', component: Paper, lossesTo: 3 },
+	{ id: 3, name: 'scissors', component: Scissors, lossesTo: 1 },
 ];
 
+const resultMessages = {
+	win: 'Победа!',
+	lose: 'Вы проиграли',
+	draw: 'Ничья',
+};
+
 export default function App() {
-	const [userChose, setUserChose] = useState(null);
-	const [computerChose, setComputerChose] = useState(null);
-	const [wins, setWins] = useState(0);
-	const [losses, setLosses] = useState(0);
-	const [gameState, setGameState] = useState(null);
-
-	useEffect(() => {
-		const randomChoice =
-			choices[Math.floor(Math.random() * choices.length)];
-		setComputerChose(randomChoice);
-	}, []);
-
-	const userChoiseHandler = (choice) => {
-		setUserChose(choice);
-		setGameState('win');
-	};
+	const {
+		userChose,
+		computerChose,
+		wins,
+		losses,
+		gameState,
+		userChoiseHandler,
+	} = useGame(choices);
 
 	const renderComponent = (choice) => {
 		const Component = choice.component;
@@ -55,7 +54,7 @@ export default function App() {
 					<div>
 						<div className='game-state-content'>
 							<p>{renderComponent(userChose)}</p>
-							<p>Вы победили!</p>
+							<p>{resultMessages[gameState]}</p>
 							<p>{renderComponent(computerChose)}</p>
 						</div>
 					</div>
