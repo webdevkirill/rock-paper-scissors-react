@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 export const useGame = (choices) => {
 	const [userChose, setUserChose] = useState(null);
@@ -7,11 +7,17 @@ export const useGame = (choices) => {
 	const [losses, setLosses] = useState(0);
 	const [gameState, setGameState] = useState(null);
 
-	useEffect(() => {
+	const restartGame = useCallback(() => {
+		setGameState(null);
+		setUserChose(null);
 		const randomChoice =
 			choices[Math.floor(Math.random() * choices.length)];
 		setComputerChose(randomChoice);
 	}, [choices]);
+
+	useEffect(() => {
+		restartGame();
+	}, [restartGame]);
 
 	const userChoiseHandler = (choice) => {
 		setUserChose(choice);
@@ -36,5 +42,6 @@ export const useGame = (choices) => {
 		losses,
 		gameState,
 		userChoiseHandler,
+		restartGame,
 	};
 };

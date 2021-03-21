@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import './App.css';
 import { Rock } from './icons/Rock';
 import { Paper } from './icons/Paper';
@@ -25,6 +25,7 @@ export default function App() {
 		losses,
 		gameState,
 		userChoiseHandler,
+		restartGame,
 	} = useGame(choices);
 
 	const renderComponent = (choice) => {
@@ -57,6 +58,7 @@ export default function App() {
 							<p>{resultMessages[gameState]}</p>
 							<p>{renderComponent(computerChose)}</p>
 						</div>
+						<button onClick={restartGame}>Играть заного</button>
 					</div>
 				</div>
 			)}
