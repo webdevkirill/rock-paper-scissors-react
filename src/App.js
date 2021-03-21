@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 import Rock from './icons/Rock';
 import Paper from './icons/Paper';
@@ -11,8 +11,17 @@ const choices = [
 ];
 
 export default function App() {
+	const [userChose, setUserChose] = useState(null);
+	const [computerChose, setComputerChose] = useState(null);
+
+	useEffect(() => {
+		const randomChoice =
+			choices[Math.floor(Math.random() * choices.length)];
+		setComputerChose(randomChoice);
+	}, []);
+
 	const userChoiseHandler = (choice) => {
-		console.log(choice);
+		setUserChose(choice);
 	};
 
 	return (
